@@ -1,4 +1,4 @@
 INSERT INTO BOOK(id, title, description, status) VALUES (1, 'SOLID Principle In Action', 'SOLID in depth.', 'AVAILABLE');
 
-INSERT INTO USER(id, name, role) VALUES (1, 'LIBRARIAN 1', 'LIBRARIAN');
-INSERT INTO USER(id, name, role) VALUES (2, 'MEMBER 1', 'MEMBER');
+INSERT INTO USER(user_name, name, role, password) VALUES ('librarian', 'LIBRARIAN 1', 'LIBRARIAN', 'librarian_password');
+INSERT INTO USER(user_name, name, role, password) VALUES ('member', 'MEMBER 1', 'MEMBER', 'member_password');
