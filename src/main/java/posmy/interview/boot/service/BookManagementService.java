@@ -19,14 +19,16 @@ import java.util.List;
 
 @Service
 public class BookManagementService {
-    @Autowired
     private BookRepository bookRepository;
-
-    @Autowired
     private UserRepository userRepository;
+    private BookBorrowerRepository bookBorrowerRepository;
 
     @Autowired
-    private BookBorrowerRepository bookBorrowerRepository;
+    public BookManagementService(BookRepository bookRepository, UserRepository userRepository, BookBorrowerRepository bookBorrowerRepository) {
+        this.bookRepository = bookRepository;
+        this.userRepository = userRepository;
+        this.bookBorrowerRepository = bookBorrowerRepository;
+    }
 
     public void addNewBook(BookDto bookDto) {
         Book book = Book.builder()
@@ -93,7 +95,7 @@ public class BookManagementService {
     @SneakyThrows
     private Book getBookById(int bookId) {
         return bookRepository.findById(bookId)
-                .orElseThrow(() -> new RecordNotFoundException("Book with batch no (" + bookId + ") record not found."));
+                .orElseThrow(() -> new RecordNotFoundException("Book with id (" + bookId + ") record not found."));
 
     }
 

@@ -3,6 +3,7 @@ package posmy.interview.boot.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import posmy.interview.boot.constant.UserRoleEnum;
 
 import javax.validation.constraints.NotNull;
 
@@ -15,5 +16,6 @@ public class UserDto {
     @NotNull
     private String name;
     @NotNull
-    private String role;
+    private UserRoleEnum role;
+    private String password;
 }

@@ -28,7 +28,7 @@ public class CustomAuthentication implements AuthenticationManager {
             if (user.getPassword().equals(authentication.getCredentials())) {
                 String name = authentication.getName();
 
-                return new UsernamePasswordAuthenticationToken(name, null, List.of(new SimpleGrantedAuthority(user.getRole())));
+                return new UsernamePasswordAuthenticationToken(name, null, List.of(new SimpleGrantedAuthority(user.getRole().name())));
             }
         }
 

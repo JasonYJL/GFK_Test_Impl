@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class BookBorrowerDto {
-    private String userName;
-    private int bookId;
+public class ApiExceptionResponseDto {
+    private String message;
+    private String code;
 }
