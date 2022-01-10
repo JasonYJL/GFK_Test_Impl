@@ -1,11 +1,9 @@
 package posmy.interview.boot.entity;
 
 import lombok.*;
+import posmy.interview.boot.constant.BookStatusEnum;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Setter
 @Getter
@@ -19,5 +17,6 @@ public class Book {
     private int id;
     private String title;
     private String description;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private BookStatusEnum status;
 }

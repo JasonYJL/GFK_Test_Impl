@@ -3,6 +3,7 @@ package posmy.interview.boot.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import posmy.interview.boot.constant.BookStatusEnum;
 
 import javax.validation.constraints.NotNull;
 
@@ -18,5 +19,5 @@ public class BookDto {
     @NotNull
     private String description;
 
-    private String status;
+    private BookStatusEnum status;
 }

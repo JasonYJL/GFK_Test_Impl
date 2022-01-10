@@ -3,11 +3,14 @@ package posmy.interview.boot.service;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import posmy.interview.boot.constant.BookStatusEnum;
 import posmy.interview.boot.dto.BookBorrowerDto;
 import posmy.interview.boot.dto.BookDto;
 import posmy.interview.boot.entity.Book;
 import posmy.interview.boot.entity.BookBorrower;
 import posmy.interview.boot.entity.User;
+import posmy.interview.boot.exception.BookNotAvailableException;
+import posmy.interview.boot.exception.RecordNotFoundException;
 import posmy.interview.boot.repository.BookBorrowerRepository;
 import posmy.interview.boot.repository.BookRepository;
 import posmy.interview.boot.repository.UserRepository;
@@ -27,7 +30,7 @@ public class BookManagementService {
 
     public void addNewBook(BookDto bookDto) {
         Book book = Book.builder()
-                .status("AVAILABLE")
+                .status(BookStatusEnum.AVAILABLE)
                 .description(bookDto.getDescription())
                 .title(bookDto.getTitle())
                 .build();
@@ -61,11 +64,11 @@ public class BookManagementService {
     public Book borrowOrReturnBook(int bookId, boolean isBorrow) {
         Book book = getBookById(bookId);
 
-        if (isBorrow && !book.getStatus().equals("AVAILABLE")) {
-            throw new Exception("The book is not available for borrow.");
+        if (isBorrow && !book.getStatus().equals(BookStatusEnum.AVAILABLE)) {
+            throw new BookNotAvailableException("The book (" + bookId + ") is not available for borrow.");
         }
 
-        book.setStatus(isBorrow ? "BORROWED" : "AVAILABLE");
+        book.setStatus(isBorrow ? BookStatusEnum.BORROWED : BookStatusEnum.AVAILABLE);
         bookRepository.save(book);
 
         return book;
@@ -76,7 +79,7 @@ public class BookManagementService {
     }
 
     public List<BookDto> getAllAvailableBook() {
-        List<Book> bookList = bookRepository.findByStatus("AVAILABLE");
+        List<Book> bookList = bookRepository.findByStatus(BookStatusEnum.AVAILABLE);
         return bookList.stream()
                 .map(book -> BookDto.builder()
                         .id(book.getId())
@@ -90,13 +93,13 @@ public class BookManagementService {
     @SneakyThrows
     private Book getBookById(int bookId) {
         return bookRepository.findById(bookId)
-                .orElseThrow(() -> new Exception("Book with batch no (" + bookId + ") record not found."));
+                .orElseThrow(() -> new RecordNotFoundException("Book with batch no (" + bookId + ") record not found."));
 
     }
 
     @SneakyThrows
     private User getUserById(String userName) {
         return userRepository.findById(userName)
-                .orElseThrow(() -> new Exception("User with user name (" + userName + ") not found."));
+                .orElseThrow(() -> new RecordNotFoundException("User with user name (" + userName + ") not found."));
     }
 }

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import posmy.interview.boot.dto.UserDto;
 import posmy.interview.boot.entity.User;
+import posmy.interview.boot.exception.NonMemberRemoveException;
+import posmy.interview.boot.exception.RecordNotFoundException;
 import posmy.interview.boot.repository.UserRepository;
 
 import java.util.List;
@@ -38,7 +40,7 @@ public class UserManagementService {
         User user = getUserById(userName);
 
         if (!"MEMBER".equals(user.getRole())) {
-            throw new Exception("Only user which is MEMBER can be removed");
+            throw new NonMemberRemoveException("Only user which is MEMBER can be removed");
         }
 
         userRepository.deleteById(userName);
@@ -58,6 +60,6 @@ public class UserManagementService {
     @SneakyThrows
     private User getUserById(String userName) {
         return userRepository.findById(userName)
-                .orElseThrow(() -> new Exception("User with user name (" + userName + ") not found."));
+                .orElseThrow(() -> new RecordNotFoundException("User with user name (" + userName + ") not found."));
     }
 }
