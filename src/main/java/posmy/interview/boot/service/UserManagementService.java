@@ -87,7 +87,8 @@ public class UserManagementService {
     }
 
     String getCurrentAuthenticatedUser() {
-        return (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        org.springframework.security.core.userdetails.User authenticatedUser = (org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return authenticatedUser.getUsername();
     }
 
     List<GrantedAuthority> getCurrentAuthenticatedUserAuthorities() {

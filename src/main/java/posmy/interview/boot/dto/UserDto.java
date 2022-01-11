@@ -1,8 +1,6 @@
 package posmy.interview.boot.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import posmy.interview.boot.constant.UserRoleEnum;
 
 import javax.validation.constraints.NotNull;
@@ -10,6 +8,8 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
 
     private String userName;

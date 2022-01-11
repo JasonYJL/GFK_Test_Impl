@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import posmy.interview.boot.entity.User;
 import posmy.interview.boot.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +28,8 @@ public class CustomAuthentication implements AuthenticationManager {
 
             if (user.getPassword().equals(authentication.getCredentials())) {
                 String name = authentication.getName();
-
-                return new UsernamePasswordAuthenticationToken(name, null, List.of(new SimpleGrantedAuthority(user.getRole().name())));
+                org.springframework.security.core.userdetails.User authenticatedUser = new org.springframework.security.core.userdetails.User(name, "", new ArrayList<>());
+                return new UsernamePasswordAuthenticationToken(authenticatedUser, null, List.of(new SimpleGrantedAuthority(user.getRole().name())));
             }
         }
 

@@ -3,6 +3,7 @@ package posmy.interview.boot.service;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import posmy.interview.boot.constant.BookStatusEnum;
 import posmy.interview.boot.dto.BookBorrowerDto;
 import posmy.interview.boot.dto.BookDto;
@@ -50,6 +51,7 @@ public class BookManagementService {
         bookRepository.save(book);
     }
 
+    @Transactional
     @SneakyThrows
     public void insertBookBorrowerRecord(BookBorrowerDto bookBorrowerDto) {
         Book book = borrowOrReturnBook(bookBorrowerDto.getBookId(), true);
