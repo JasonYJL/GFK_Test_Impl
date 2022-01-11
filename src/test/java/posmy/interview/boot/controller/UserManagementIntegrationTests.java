@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class UserManagementControllerTests {
+class UserManagementIntegrationTests {
     @Autowired
     private WebApplicationContext context;
 
