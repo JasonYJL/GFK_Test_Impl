@@ -63,8 +63,8 @@ class UserManagementControllerITs {
     @DisplayName("Librarian update existing member info")
     void test_updateMemberInfo_with_librarian_login() throws Exception {
         UserDto userDto = UserDto.builder()
-                .userName("member")
-                .name("Member V2")
+                .userName("tester")
+                .name("Tester V2")
                 .role(UserRoleEnum.MEMBER)
                 .build();
 
@@ -79,7 +79,7 @@ class UserManagementControllerITs {
     @Test
     @Order(3)
     @WithMockUser(username="librarian", authorities = {"LIBRARIAN"})
-    @DisplayName("Librarian remove member record")
+    @DisplayName("Librarian remove Member 2 record")
     void test_removeMemberRecord_with_librarian_login() throws Exception {
         mvc.perform(delete("/user/remove")
                 .param("userName", "member_2"))
@@ -110,7 +110,7 @@ class UserManagementControllerITs {
 
         assertEquals(1, userDtoList.size());
         assertEquals("tester", userDtoList.get(0).getUserName());
-        assertEquals("Tester", userDtoList.get(0).getName());
+        assertEquals("Tester V2", userDtoList.get(0).getName());
         assertEquals(UserRoleEnum.MEMBER, userDtoList.get(0).getRole());
         assertNull(userDtoList.get(0).getPassword());
     }
