@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class UserManagementControllerITs {
+class UserManagementControllerTests {
     @Autowired
     private WebApplicationContext context;
 
@@ -63,8 +63,8 @@ class UserManagementControllerITs {
     @DisplayName("Librarian update existing member info")
     void test_updateMemberInfo_with_librarian_login() throws Exception {
         UserDto userDto = UserDto.builder()
-                .userName("tester")
-                .name("Tester V2")
+                .userName("member")
+                .name("Member V2")
                 .role(UserRoleEnum.MEMBER)
                 .build();
 
@@ -82,17 +82,17 @@ class UserManagementControllerITs {
     @DisplayName("Librarian remove Member 2 record")
     void test_removeMemberRecord_with_librarian_login() throws Exception {
         mvc.perform(delete("/user/remove")
-                .param("userName", "member_2"))
+                .param("userName", "tester"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @Order(4)
-    @WithMockUser(value="member", authorities = {"MEMBER"})
+    @WithMockUser(value="member_2", authorities = {"MEMBER"})
     @DisplayName("Member remove own record")
     void test_removeOwnMemberRecord_with_member_login() throws Exception {
         mvc.perform(delete("/user/remove")
-                .param("userName", "member"))
+                .param("userName", "member_2"))
                 .andExpect(status().isOk());
     }
 
@@ -109,8 +109,8 @@ class UserManagementControllerITs {
         List<UserDto> userDtoList = mapper.readValue(content,  new TypeReference<>() {});
 
         assertEquals(1, userDtoList.size());
-        assertEquals("tester", userDtoList.get(0).getUserName());
-        assertEquals("Tester V2", userDtoList.get(0).getName());
+        assertEquals("member", userDtoList.get(0).getUserName());
+        assertEquals("Member V2", userDtoList.get(0).getName());
         assertEquals(UserRoleEnum.MEMBER, userDtoList.get(0).getRole());
         assertNull(userDtoList.get(0).getPassword());
     }
